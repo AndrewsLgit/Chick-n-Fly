@@ -1,0 +1,9 @@
+Chick: Can jump straight forward in the direction of the arrow. It will stick to safe platforms or die if it lands on unsafe platforms or touches enemies.
+
+Safe platforms: The chick can stick to them either right side up or upside down, but not at the corners.
+
+Unsafe platforms: If the chick touches them, it dies and it's Game Over.
+
+Bubbles: If the chick jumps into a bubble, it stops and can jump again in any 360° direction.
+
+Enemies: They fly along a looping path. If the chick touches them, it's Game Over.

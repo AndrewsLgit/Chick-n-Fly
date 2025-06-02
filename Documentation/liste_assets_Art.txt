@@ -1,0 +1,17 @@
+Game:
+
+- 1 Poussin MUST!
+- Nid (Objectif) MUST!
+- 3 Plateformes gentilles (petit,medium,grand) MUST!
+- 3 Plateformes Mechant (petit,medium,grand) MUST!
+- 1 ennemi Should
+- 1 bulle should
+- 1 background Could
+
+HUD:
+
+- 1 fleche (etat 1: Normal/ Etat 2: pressé) MUST!
+- 1 timer MUST!
+- GameOver Screen Could
+- Victory Screen Could
+

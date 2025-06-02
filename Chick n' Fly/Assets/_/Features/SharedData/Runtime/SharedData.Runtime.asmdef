@@ -1,0 +1,16 @@
+{
+    "name": "SharedData.Runtime",
+    "rootNamespace": "SharedData.Runtime",
+    "references": [
+        "GUID:24e6fbeea667bae45b0d07b3c48194b3"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

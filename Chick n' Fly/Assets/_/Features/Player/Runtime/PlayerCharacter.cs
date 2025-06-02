@@ -9,6 +9,7 @@ namespace Player.Runtime
         #region Private Variables
 
         private Rigidbody _rigidbody;
+        private Tween _tween;
         [SerializeField] private GameObject _directionArrowPivot;
  
         [Header("Movement Values")]
@@ -25,8 +26,6 @@ namespace Player.Runtime
         [SerializeField] private float _jumpForce = 10f;
         private bool _isJumping = false;
         private bool _isGrounded = true;
-        
-        
 
         #endregion
         
@@ -50,6 +49,14 @@ namespace Player.Runtime
             // execute player rotation logic
         }
 
+        private void FixedUpdate()
+        {
+            if (_isJumping)
+            {
+                Jump();
+            }
+        }
+
         #endregion
         
         #region Public Methods
@@ -58,15 +65,34 @@ namespace Player.Runtime
             private void ArrowRotationLeft()
             {
                 if (_isGrounded && !_isJumping)
+                {
+                    _tween = Tween.Rotation(_directionArrowPivot.transform, endValue: Quaternion.Euler(0, 0, _rotationAngleLeft), duration: _rotationDuration);
+                    if (_isJumping || !_isGrounded)
+                    {
+                        _tween.Stop();
+                    }
+                    _tween.OnComplete(ArrowRotationRight); 
+                    
+                }
                 // _directionArrow.transform.rotation = Quaternion.LookRotation(Vector3.forward, Vector3.up);
-                    Tween.Rotation(_directionArrowPivot.transform, endValue: Quaternion.Euler(0, 0, _rotationAngleLeft), duration: _rotationDuration).OnComplete(ArrowRotationRight);
+                    
             }
-
+            // player arrow rotation to the other side
             private void ArrowRotationRight()
             {
+                // if (_isGrounded && !_isJumping)
+                //     Tween.Rotation(_directionArrowPivot.transform, endValue: Quaternion.Euler(0, 0, _rotationAngleRight),
+                //         duration: _rotationDuration).OnComplete(ArrowRotationLeft);
+
                 if (_isGrounded && !_isJumping)
-                    Tween.Rotation(_directionArrowPivot.transform, endValue: Quaternion.Euler(0, 0, _rotationAngleRight),
-                        duration: _rotationDuration).OnComplete(ArrowRotationLeft);
+                {
+                    _tween =  Tween.Rotation(_directionArrowPivot.transform, endValue: Quaternion.Euler(0, 0, _rotationAngleRight), duration: _rotationDuration);
+                    if (_isJumping || !_isGrounded)
+                    {
+                        _tween.Stop();
+                    }
+                    _tween.OnComplete(ArrowRotationLeft);
+                }
             }
 
             public void Jump()

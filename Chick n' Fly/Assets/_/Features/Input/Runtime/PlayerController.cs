@@ -1,3 +1,4 @@
+using Player.Runtime;
 using SharedData.Runtime;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -17,6 +18,7 @@ namespace Input.Runtime
 
         private GameInputSystem _gameInputSystem;
         private bool _isJumping = false;
+        private PlayerCharacter _playerCharacter;
         [Header("Movement Events")] 
         [SerializeField] private BoolEventChannel _onPlayerJump;
 

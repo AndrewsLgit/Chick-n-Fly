@@ -29,4 +29,7 @@ namespace SharedData.Runtime
     }
     
     public readonly struct Empty {}
+    
+    [CreateAssetMenu(menuName = "Event Channels/EventChannel")]
+    public class EventChannel : EventChannel<Empty> { }
 }

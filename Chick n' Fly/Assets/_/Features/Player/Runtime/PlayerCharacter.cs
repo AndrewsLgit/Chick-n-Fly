@@ -108,8 +108,8 @@ namespace Player.Runtime
 
             public void Jump()
             {
-                
-                _rigidbody.AddForce(new Vector3(0, _jumpForce, 0), ForceMode2D.Impulse);
+                _rigidbody.linearVelocity = _directionArrowPivot.transform.up * _jumpForce;
+                //_rigidbody.AddForce(new Vector3(0, _jumpForce, 0), ForceMode2D.Impulse);
             }
         
         #endregion

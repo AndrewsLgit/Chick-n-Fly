@@ -3,10 +3,11 @@ using UnityEngine;
 
 namespace Input.Runtime
 {
-    public interface IPlayerController //: GameInputSystem.IPlayerActions
+    public interface IPlayerController 
     {
-        public Vector2 MoveInput { get; }
-        public Vector2EventChannel OnPlayerMove { get; }
+        public BoolEventChannel OnPlayerJump { get; }
+        // public Vector2 MoveInput { get; }
+        // public Vector2EventChannel OnPlayerMove { get; }
         
         //public Vector2ScriptableObject PlayerInputVector2 { get; }
        

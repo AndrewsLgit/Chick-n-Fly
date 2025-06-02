@@ -4,25 +4,21 @@ using UnityEngine.InputSystem;
 
 namespace Input.Runtime
 {
-    public class PlayerController : BigBrother, IPlayerController
+    public class PlayerController : BigBrother, IPlayerController, GameInputSystem.IGameJamInputActions
     {
         #region Public Members
         
-        public Vector2 MoveInput { get; }
-
         [Header("Movement Events")]
-        public Vector2EventChannel OnPlayerMove { get; }
-        public Vector2ScriptableObject OnPlayerMoveInputValue { get; }
+        public BoolEventChannel OnPlayerJump { get; }
         //public Vector2ScriptableObject PlayerInputVector2 { get; }
 
         #endregion
 
         #region Private Variables
 
-        // private GameInputSystem _gameInputSystem;
-        private Rigidbody _rigidbody;
-        private float _speed = 10;
-        private float _rotationSpeed = 1.2f;
+        private GameInputSystem _gameInputSystem;
+        private bool _isJumping = false;
+        
 
         #endregion
         
@@ -31,15 +27,14 @@ namespace Input.Runtime
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         private void Awake()
         {
-            // _gameInputSystem = new GameInputSystem();
-            // _gameInputSystem.Enable();
-            // _gameInputSystem.Player.SetCallbacks(this);
-            _rigidbody = GetComponent<Rigidbody>();
+            _gameInputSystem = new GameInputSystem();
+            _gameInputSystem.Enable();
+            _gameInputSystem.Player.SetCallbacks((GameInputSystem.IPlayerActions) this);
         }
 
         private void OnDisable()
         {
-            // _gameInputSystem.Disable();
+            _gameInputSystem.Disable();
         }
 
         // Update is called once per frame
@@ -52,25 +47,36 @@ namespace Input.Runtime
         
         #region Main Methods
 
+        public void OnJump(InputAction.CallbackContext context)
+        {
+            // send event when player jumps
+            if (context.performed)
+            {
+                _isJumping = true;
+                OnPlayerJump?.Invoke(_isJumping);
+            }
+            else if (context.canceled)
+            {
+                _isJumping = false;
+                OnPlayerJump?.Invoke(_isJumping);
+            }
+        }
+
         // only rotate target using movement input
         // send player input value to scriptable object for the Player script
         // invoke OnPlayerMove event for game manager to get player input
-        public void OnMove(InputAction.CallbackContext context)
-        {
-            if (!context.performed) return;
-            var moveInput = context.ReadValue<Vector2>();
-            
-            OnPlayerMoveInputValue.m_value = moveInput;
-            OnPlayerMove.Invoke(OnPlayerMoveInputValue.m_value);
-            
-            //PlayerInputVector2.m_value = moveInput;
-            // Remove next line and use player input inside PlayerCharacter script
-            this.transform.Rotate(new Vector3(0, moveInput.x, 0));
-        }
-
-        public void OnLook(InputAction.CallbackContext context)
-        {
-        }
+        // public void OnMove(InputAction.CallbackContext context)
+        // {
+        //     if (!context.performed) return;
+        //     var moveInput = context.ReadValue<Vector2>();
+        //     
+        //     // OnPlayerMoveInputValue.m_value = moveInput;
+        //     // OnPlayerMove.Invoke(OnPlayerMoveInputValue.m_value);
+        //     
+        //     //PlayerInputVector2.m_value = moveInput;
+        //     // Remove next line and use player input inside PlayerCharacter script
+        //     this.transform.Rotate(new Vector3(0, moveInput.x, 0));
+        // }
 
         // ToDo: remove following code if useless
         // public void SubToMoveEvent(Vector2 moveInput)
@@ -81,5 +87,6 @@ namespace Input.Runtime
         // }
         
         #endregion
+        
     }
 }

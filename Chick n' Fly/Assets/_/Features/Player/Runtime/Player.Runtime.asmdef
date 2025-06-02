@@ -1,7 +1,10 @@
 {
     "name": "Player.Runtime",
     "rootNamespace": "Player.Runtime",
-    "references": [],
+    "references": [
+        "GUID:24e6fbeea667bae45b0d07b3c48194b3",
+        "GUID:80ecb87cae9c44d19824e70ea7229748"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

@@ -7,8 +7,11 @@ namespace Player.Runtime
     public class PlayerCharacter : BigBrother
     {
         #region Private Variables
-
-        private Rigidbody _rigidbody;
+        //todo: remove rigidbody and use linearVelocity
+        //todo: make player jump towards arrow direction
+        // todo: make arrow stop moving when _isJumping
+        // add collider to stick to surfaces
+        private Rigidbody2D _rigidbody;
         private Tween _tween;
         [SerializeField] private GameObject _directionArrowPivot;
  
@@ -33,7 +36,7 @@ namespace Player.Runtime
 
         private void Awake()
         {
-            _rigidbody = GetComponent<Rigidbody>();
+            _rigidbody = GetComponent<Rigidbody2D>();
             _initialRotation = transform.localRotation.eulerAngles;
             _rotationAngleRight = -_rotationAngleLeft;
         }
@@ -97,7 +100,7 @@ namespace Player.Runtime
 
             public void Jump()
             {
-                _rigidbody.AddForce(new Vector3(0, _jumpForce, 0), ForceMode.Impulse);
+                _rigidbody.AddForce(new Vector3(0, _jumpForce, 0), ForceMode2D.Impulse);
                 //todo: make player jump with _rigidbody.AddForce() with impulse
             }
         

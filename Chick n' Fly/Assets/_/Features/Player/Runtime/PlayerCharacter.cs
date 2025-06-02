@@ -56,6 +56,7 @@ namespace Player.Runtime
         {
             if (_isJumping)
             {
+                _tween.Stop();
                 Jump();
             }
         }
@@ -70,10 +71,10 @@ namespace Player.Runtime
                 if (_isGrounded && !_isJumping)
                 {
                     _tween = Tween.Rotation(_directionArrowPivot.transform, endValue: Quaternion.Euler(0, 0, _rotationAngleLeft), duration: _rotationDuration);
-                    if (_isJumping || !_isGrounded)
-                    {
-                        _tween.Stop();
-                    }
+                    // if (_isJumping || !_isGrounded)
+                    // {
+                    //     _tween.Stop();
+                    // }
                     _tween.OnComplete(ArrowRotationRight); 
                     
                 }
@@ -90,10 +91,10 @@ namespace Player.Runtime
                 if (_isGrounded && !_isJumping)
                 {
                     _tween =  Tween.Rotation(_directionArrowPivot.transform, endValue: Quaternion.Euler(0, 0, _rotationAngleRight), duration: _rotationDuration);
-                    if (_isJumping || !_isGrounded)
-                    {
-                        _tween.Stop();
-                    }
+                    // if (_isJumping || !_isGrounded)
+                    // {
+                    //     _tween.Stop();
+                    // }
                     _tween.OnComplete(ArrowRotationLeft);
                 }
             }

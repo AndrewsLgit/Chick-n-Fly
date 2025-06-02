@@ -29,6 +29,7 @@ namespace Input.Runtime
         {
             _gameInputSystem = new GameInputSystem();
             _gameInputSystem.Enable();
+            // todo: fix this shit
             _gameInputSystem.Player.SetCallbacks((GameInputSystem.IPlayerActions) this);
         }
 

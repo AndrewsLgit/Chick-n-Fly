@@ -5,7 +5,7 @@ namespace Input.Runtime
 {
     public interface IPlayerController 
     {
-        public BoolEventChannel OnPlayerJump { get; }
+        // protected BoolEventChannel OnPlayerJump { get; }
         // public Vector2 MoveInput { get; }
         // public Vector2EventChannel OnPlayerMove { get; }
         

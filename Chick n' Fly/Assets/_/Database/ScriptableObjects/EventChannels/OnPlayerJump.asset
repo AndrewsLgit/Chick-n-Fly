@@ -9,6 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8f9946db8c2a4f63bed5c85ead05d6ba, type: 3}
-  m_Name: OnPlayerMoveVector2Event
+  m_Script: {fileID: 11500000, guid: 615598eab85a425894f5435211af1aaa, type: 3}
+  m_Name: OnPlayerJump
   m_EditorClassIdentifier: 

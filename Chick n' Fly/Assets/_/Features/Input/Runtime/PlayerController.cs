@@ -4,12 +4,11 @@ using UnityEngine.InputSystem;
 
 namespace Input.Runtime
 {
-    public class PlayerController : BigBrother, IPlayerController, GameInputSystem.IGameJamInputActions
+    public class PlayerController : BigBrother, IPlayerController, GameInputSystem.IPlayerActions
     {
         #region Public Members
         
-        [Header("Movement Events")]
-        public BoolEventChannel OnPlayerJump { get; }
+        // BoolEventChannel OnPlayerJump { get; }
         //public Vector2ScriptableObject PlayerInputVector2 { get; }
 
         #endregion
@@ -18,7 +17,8 @@ namespace Input.Runtime
 
         private GameInputSystem _gameInputSystem;
         private bool _isJumping = false;
-        
+        [Header("Movement Events")] 
+        [SerializeField] private BoolEventChannel _onPlayerJump;
 
         #endregion
         
@@ -30,7 +30,7 @@ namespace Input.Runtime
             _gameInputSystem = new GameInputSystem();
             _gameInputSystem.Enable();
             // todo: fix this shit
-            _gameInputSystem.Player.SetCallbacks((GameInputSystem.IPlayerActions) this);
+            _gameInputSystem.Player.SetCallbacks(this);
         }
 
         private void OnDisable()
@@ -54,12 +54,12 @@ namespace Input.Runtime
             if (context.performed)
             {
                 _isJumping = true;
-                OnPlayerJump?.Invoke(_isJumping);
+                _onPlayerJump?.Invoke(_isJumping);
             }
             else if (context.canceled)
             {
                 _isJumping = false;
-                OnPlayerJump?.Invoke(_isJumping);
+                _onPlayerJump?.Invoke(_isJumping);
             }
         }
 

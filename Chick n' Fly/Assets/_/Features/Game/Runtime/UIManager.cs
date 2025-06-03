@@ -12,6 +12,7 @@ namespace Game.Runtime
 
         [SerializeField] private GameObject _pauseMenu;
         [SerializeField] private GameObject _gameOverMenu;
+        [SerializeField] private GameObject _victoryMenu;
 
         #endregion
 
@@ -20,7 +21,7 @@ namespace Game.Runtime
         private void Awake()
         {
             // pause game on awake (optional, can put inside Start() method
-            _isPaused = true;
+            _isPaused = false;
             
             // some UI setup
         }
@@ -74,6 +75,12 @@ namespace Game.Runtime
             Time.timeScale = 0;
             _gameOverMenu.SetActive(true);
         }
+
+        public void Victory()
+        {
+            Time.timeScale = 0;
+            _victoryMenu.SetActive(true);
+        }
         
         /*
         private void SetScoreTexts()
@@ -83,6 +90,15 @@ namespace Game.Runtime
            _highScoreText.text = $"HighScore: {_roundSystemSO.m_highScore}";           }
          */
 
-        #endregion 
+        #endregion
+
+        #region Utils
+
+        private void SetPause()
+        {
+            _isPaused = !_isPaused;
+        }
+
+        #endregion
     }
 }

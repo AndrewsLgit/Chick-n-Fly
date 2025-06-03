@@ -19,6 +19,7 @@ namespace Player.Runtime
         }
 
         public STATE m_currentState =  STATE.AIMING;
+        public Platform m_currentPlatform; //todo: add platform check to JUMP STATE
 
         #endregion
         #region Private Variables
@@ -32,7 +33,7 @@ namespace Player.Runtime
         [Header("References")]
         [SerializeField] private GameObject _directionArrowPivot;
         [SerializeField] private Rigidbody2D _rigidbody;
-        [SerializeField] private GroundChecker _groundChecker;
+        [SerializeField] private GroundChecker _groundChecker; // todo: change player 2D collider to Capsule Collider 2D
 
  
         [Header("Movement Values")]
@@ -111,6 +112,7 @@ namespace Player.Runtime
             switch (m_currentState)
             {
                 case STATE.AIMING:
+                    //todo: manage HandleAiming in coroutine so that the animation doesn't bug out
                     HandleAiming();
                     break;
                 case STATE.POWER:

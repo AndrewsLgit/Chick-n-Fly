@@ -1,7 +1,7 @@
-using UnityEngine;
-
-namespace SharedData.Runtime
-{
-    // [CreateAssetMenu(menuName = "Event Channels/EventChannel")]
-    // public class EmptyEventChannel : EventChannel<Empty> { }
-}
+// using UnityEngine;
+//
+// namespace SharedData.Runtime
+// {
+//     // [CreateAssetMenu(menuName = "Event Channels/EventChannel")]
+//     // public class EmptyEventChannel : EventChannel<Empty> { }
+// }

@@ -20,7 +20,7 @@ namespace Input.Runtime
         private bool _isJumping = false;
         private PlayerCharacter _playerCharacter;
         [Header("Movement Events")] 
-        [SerializeField] private BoolEventChannel _onPlayerJump;
+        [SerializeField] private BoolEventChannel _playerIsJumping;
 
         #endregion
         
@@ -31,7 +31,6 @@ namespace Input.Runtime
         {
             _gameInputSystem = new GameInputSystem();
             _gameInputSystem.Enable();
-            // todo: fix this shit
             _gameInputSystem.Player.SetCallbacks(this);
         }
 
@@ -53,15 +52,15 @@ namespace Input.Runtime
         public void OnJump(InputAction.CallbackContext context)
         {
             // send event when player jumps
-            if (context.performed)
+            if (context.started)
             {
                 _isJumping = true;
-                _onPlayerJump?.Invoke(_isJumping);
+                _playerIsJumping?.Invoke(_isJumping);
             }
             else if (context.canceled)
             {
                 _isJumping = false;
-                _onPlayerJump?.Invoke(_isJumping);
+                _playerIsJumping?.Invoke(_isJumping);
             }
         }
 

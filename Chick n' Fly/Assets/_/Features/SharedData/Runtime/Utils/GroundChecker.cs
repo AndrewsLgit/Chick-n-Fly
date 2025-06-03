@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Player.Runtime
+namespace SharedData.Runtime 
 {
     public class GroundChecker : BigBrother
     {

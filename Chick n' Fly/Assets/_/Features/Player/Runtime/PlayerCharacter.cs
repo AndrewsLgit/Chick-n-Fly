@@ -38,14 +38,16 @@ namespace Player.Runtime
         [SerializeField] private GroundChecker _groundChecker; // todo: change player 2D collider to Capsule Collider 2D
 
  
-        [Header("Movement Values")]
-        [SerializeField] private float _speed = 10;
+        //[Header("Movement Values")]
+        //[SerializeField] private float _speed = 10;
         
         [Header("Rotation Values")]
         // [SerializeField] private float _rotationSpeed = 1.2f;
         // [SerializeField] private float _rotationAngleRight = 0;
         [SerializeField] private float _rotationAngle = 90f;
         [SerializeField] private float _rotationDuration;
+        [SerializeField] private float _currentAimDegrees;
+        [SerializeField] private float _rotationSpeed;
         // private Vector3 _initialRotation;
 
         [Header("Jump Values")] 
@@ -57,7 +59,6 @@ namespace Player.Runtime
         private List<Timer>  _timers = new List<Timer>();
         private bool _jumpStateStarted = false;
         private bool _movedRight = false;
-
 
         #endregion
         
@@ -81,6 +82,12 @@ namespace Player.Runtime
         {
             HandleTimers();
             _isGrounded =  _groundChecker.IsGrounded;
+
+            if (m_currentPlatform != null)
+            {
+                transform.position = m_currentPlatform.transform.position;
+                transform.rotation = m_currentPlatform.transform.rotation;
+            }
             // manage state transitions here
             // switch (m_currentState)
             // {
@@ -107,18 +114,33 @@ namespace Player.Runtime
                 case STATE.AIMING:
                     if (!_jumpStateStarted)
                     {
+                        if (_jumpTimer.IsRunning)
+                        {
+                            m_currentState = STATE.POWER;
+                            return;
+                        }
+
                         HandleAiming();
-                        if (_jumpTimer.IsRunning) m_currentState = STATE.POWER;
                     }
                     //if (_jumpTimer.IsRunning && !_jumpStateStarted) m_currentState =  STATE.POWER;
                     break;
                 case STATE.POWER:
-                    _tween.Stop();
+                    var degreesToRad = _currentAimDegrees * Mathf.Deg2Rad;
+                    Vector2 direction = new Vector2(Mathf.Cos(degreesToRad), Mathf.Sin(degreesToRad));
+                    //degreeToRad = aimDegree * mathf.Deg2Rad
+                    //vector2 direction = vector2(mathf.cos(degreeToRad), mathf.sin(degreeToRad)
+                    // the above only happens once!
+                    //todo: maybe have a switch on update to manage states
+                    // and a switch statement inside of an input method to change states between power and jump
+                    //_tween.Stop();
+                    //Tween.StopAll(_directionArrowPivot);
+                    Tween.SetPausedAll(true, _directionArrowPivot);
+                    m_currentPlatform = null;
                     if (_jumpTimer.IsRunning) m_currentState = STATE.JUMP;
                     break;
                 case STATE.JUMP:
                     HandleJump();
-                    if (!_jumpTimer.IsRunning) m_currentState = STATE.AIMING;
+                    if (!_jumpTimer.IsRunning && m_currentPlatform != null) m_currentState = STATE.AIMING;
                     break;
                 case STATE.IDLE:
                     break;
@@ -164,7 +186,7 @@ namespace Player.Runtime
         #region Public Methods
         
             // Continuous rotation of player arrow
-            private IEnumerator ArrowRotation()
+            private IEnumerator ArrowRotationCoroutine()
             {
                 switch (_movedRight)
                 {
@@ -174,9 +196,8 @@ namespace Player.Runtime
                     case true:
                         yield return _tween =  Tween.Rotation(_directionArrowPivot.transform, endValue: Quaternion.Euler(0, 0, -_rotationAngle), duration: _rotationDuration).OnComplete(() => _movedRight = false);
                         break;
-                    
- 
                 }
+                
                 // if (_isGrounded && !_isJumping)
                 // {
                     // if (_isJumping || !_isGrounded)
@@ -190,6 +211,44 @@ namespace Player.Runtime
                 // _directionArrow.transform.rotation = Quaternion.LookRotation(Vector3.forward, Vector3.up);
                     
             }
+
+            private void ArrowRotation()
+            {
+                // aimDegree is the current degree
+                // aimDegree -= rotationSpeed * time.delta
+                // if aimDegree < minDegrees -> right = false
+                
+                // vice versa aimDegree += rotationSpeed * time.delta
+                // aimDegree > maxDegrees -> right = true
+
+                switch (_movedRight)
+                {
+                    case false:
+                        _currentAimDegrees = _currentAimDegrees - _rotationSpeed * Time.deltaTime;
+                        if (_currentAimDegrees < 0) _movedRight =  false;
+                        break;
+                    case true:
+                        _currentAimDegrees = _currentAimDegrees + _rotationSpeed * Time.deltaTime;
+                        if (_currentAimDegrees > _rotationAngle) _movedRight =  true;
+                        break;
+                }
+                _directionArrowPivot.transform.rotation = Quaternion.Euler(0, 0, _currentAimDegrees);
+                //
+                // switch (_movedRight)
+                // {
+                //     case false:
+                //         _tween = Tween
+                //             .Rotation(_directionArrowPivot.transform, endValue: Quaternion.Euler(0, 0, _rotationAngle),
+                //                 duration: _rotationDuration).OnComplete(() => _movedRight = true);
+                //         break;
+                //     case true:
+                //         _tween = Tween
+                //             .Rotation(_directionArrowPivot.transform, endValue: Quaternion.Euler(0, 0, -_rotationAngle),
+                //                 duration: _rotationDuration).OnComplete(() => _movedRight = false);
+                //         break;
+                // }
+            }
+
             // player arrow rotation to the other side
             private void ArrowRotationRight()
             {
@@ -237,10 +296,9 @@ namespace Player.Runtime
                 if (_jumpTimer.IsRunning && m_currentPlatform != null)
                 {
                     _jumpTimer.Stop();
-                    return;
+                    _directionArrowPivot.SetActive(true);
                 }
                 // }
-
                 
             }
 
@@ -249,7 +307,7 @@ namespace Player.Runtime
                 // if the player is on the ground and not jumping
                 // if (_groundChecker.IsGrounded && !_jumpTimer.IsRunning)
                 // {
-                    StartCoroutine(ArrowRotation());
+                    ArrowRotation();
                 // }
             }
         
@@ -263,8 +321,8 @@ namespace Player.Runtime
         {
             _jumpTimer = new StopwatchTimer();
             // Disable arrow (direction indicator) when the player jumps
-            _jumpTimer.OnTimerStart += () => _directionArrowPivot.SetActive(false);
-            _jumpTimer.OnTimerStop += () => _directionArrowPivot.SetActive(true);
+            _jumpTimer.OnTimerStart += () => _directionArrowPivot.SetActive(true);
+            _jumpTimer.OnTimerStop += () => _directionArrowPivot.SetActive(false);
             
             _timers.Add(_jumpTimer);
         }
@@ -276,7 +334,11 @@ namespace Player.Runtime
                 timer.Tick(Time.deltaTime);
             }
         }
-
+        
+        private void LookAtTarget(Transform target, Vector2 direction)
+        {
+            target.rotation = Quaternion.LookRotation(direction);
+        }
         #endregion
     }
 }

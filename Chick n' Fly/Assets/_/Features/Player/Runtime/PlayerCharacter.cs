@@ -81,15 +81,15 @@ namespace Player.Runtime
             {
                 case STATE.AIMING:
                     // we are aiming when the player hasn't jumped yet and is grounded
-                    if (_jumpTimer.IsRunning && _groundChecker.IsGrounded) m_currentState =  STATE.POWER; // power state means the player arrow stops moving and player jumps on key release
+                    if (_jumpTimer.IsRunning /*&& _groundChecker.IsGrounded*/) m_currentState =  STATE.POWER; // power state means the player arrow stops moving and player jumps on key release
                     break;
                 case STATE.POWER:
                     // we are in power mode when the player presses the jump key but is still grounded
-                    if (_jumpTimer.IsRunning && !_groundChecker.IsGrounded) m_currentState =  STATE.JUMP;
+                    if (_jumpTimer.IsRunning /*&& !_groundChecker.IsGrounded*/) m_currentState =  STATE.JUMP;
                     break;
                 case STATE.JUMP:
                     // we are in the jump state when the jump timer is running and the player is not grounded
-                    if (!_jumpTimer.IsRunning && _groundChecker.IsGrounded) m_currentState = STATE.AIMING;
+                    if (!_jumpTimer.IsRunning /*&& _groundChecker.IsGrounded*/) m_currentState = STATE.AIMING;
                     break;
                 case STATE.HANG:
                     break;
@@ -178,24 +178,25 @@ namespace Player.Runtime
             {
                 // if player released the jump key and the timer isn't running yet (isn't in a jump state)
                 // todo: add ground checker
-                if(!isJumping && !_jumpTimer.IsRunning && _groundChecker.IsGrounded) _jumpTimer.Start();
+                if(isJumping && !_jumpTimer.IsRunning /*&&  _groundChecker.IsGrounded*/) _jumpTimer.Start();
                 // if player jump timer is running and the player touched the ground -> stop timer
-                if(_jumpTimer.IsRunning && _groundChecker.IsGrounded) _jumpTimer.Stop();
+                //if(_jumpTimer.IsRunning /* &&  _groundChecker.IsGrounded*/) _jumpTimer.Stop();
             }
             private void HandleJump()
             {
                 // var jumpForce = _jumpForce;
                 //todo: add ground checker
-                if (_jumpTimer.IsRunning && !_groundChecker.IsGrounded)
+                if (_jumpTimer.IsRunning /*&&  !_groundChecker.IsGrounded*/)
                 {
-                    _rigidbody.linearVelocity = _directionArrowPivot.transform.up * (_jumpForce * Time.deltaTime);
+                    _rigidbody.linearVelocity = _directionArrowPivot.transform.up * (_jumpForce); //todo add back Time.deltaTime
+                    _jumpTimer.Stop();
                 }
             }
 
             private void HandleAiming()
             {
                 // if the player is on the ground and not jumping
-                if (_groundChecker.IsGrounded && !_jumpTimer.IsRunning)
+                if (/* _groundChecker.IsGrounded &&*/ !_jumpTimer.IsRunning)
                 {
                     ArrowRotationLeft();
                 }

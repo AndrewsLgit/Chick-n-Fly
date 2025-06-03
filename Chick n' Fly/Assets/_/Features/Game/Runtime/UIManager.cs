@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 
 namespace Game.Runtime
 {
-    public class UIManager : MonoBehaviour
+    public class UIManager : BigBrother
     {
         #region Private Variables
 

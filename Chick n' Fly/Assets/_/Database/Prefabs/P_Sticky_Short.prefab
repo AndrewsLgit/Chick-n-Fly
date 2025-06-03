@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8022520596481495416}
   - component: {fileID: 3388558935608204685}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: P_Sticky_Short
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -89,7 +89,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2486141860414383729}
   - component: {fileID: 2615398806005043860}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: S_Platform_Small
   m_TagString: Untagged
   m_Icon: {fileID: 0}

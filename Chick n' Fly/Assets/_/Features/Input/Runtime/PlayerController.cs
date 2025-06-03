@@ -27,7 +27,7 @@ namespace Input.Runtime
         #region Unity API
         
         // Start is called once before the first execution of Update after the MonoBehaviour is created
-        private void Awake()
+        private void OnEnable()
         {
             _gameInputSystem = new GameInputSystem();
             _gameInputSystem.Enable();
@@ -56,11 +56,13 @@ namespace Input.Runtime
             {
                 _isJumping = true;
                 _playerIsJumping?.Invoke(_isJumping);
+                Info($"player jumped: {_isJumping}");
             }
             else if (context.canceled)
             {
                 _isJumping = false;
                 _playerIsJumping?.Invoke(_isJumping);
+                Info($"player jumped: {_isJumping}");
             }
         }
 

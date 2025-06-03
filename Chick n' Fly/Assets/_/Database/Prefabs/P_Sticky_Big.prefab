@@ -101,7 +101,7 @@ GameObject:
   - component: {fileID: -9103507265778328731}
   m_Layer: 6
   m_Name: P_Sticky_Big
-  m_TagString: Untagged
+  m_TagString: Sticky
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

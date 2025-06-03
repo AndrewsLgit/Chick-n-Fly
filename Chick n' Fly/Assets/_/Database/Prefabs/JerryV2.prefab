@@ -129,12 +129,14 @@ GameObject:
   m_Component:
   - component: {fileID: 8286646693458814016}
   - component: {fileID: 6474974958433699699}
+  - component: {fileID: 277795668157503195}
   - component: {fileID: 6977200183439832827}
   - component: {fileID: 1746348703836314767}
   - component: {fileID: 2953680168752238842}
   - component: {fileID: 2724235110572140731}
   - component: {fileID: 492821593977707136}
   - component: {fileID: 4061472183312142766}
+  - component: {fileID: 5618854627876636666}
   m_Layer: 0
   m_Name: JerryV2
   m_TagString: Untagged
@@ -172,10 +174,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_isVerbose: 0
   _directionArrowPivot: {fileID: 3404891992635879048}
+  _rigidbody: {fileID: 5618854627876636666}
+  _groundChecker: {fileID: 277795668157503195}
   _speed: 10
   _rotationAngle: 90
   _rotationDuration: 2
   _jumpForce: 10
+--- !u!114 &277795668157503195
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6319745553877886278}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82386f5b3c144d34af0fcc666b310e44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_isVerbose: 1
+  _groundDistance: 0.1
+  _groundLayers:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!114 &6977200183439832827
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -338,3 +359,30 @@ MonoBehaviour:
     layerMixModes: 01000000
     layerBlendModes: 01000000
   updateTiming: 1
+--- !u!50 &5618854627876636666
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6319745553877886278}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 1
+  m_Constraints: 0

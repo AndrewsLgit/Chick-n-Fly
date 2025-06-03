@@ -517,17 +517,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: Jerry
       objectReference: {fileID: 0}
-    - target: {fileID: 483306621690166336, guid: d15012dc3e570428e80c13432a3c389a, type: 3}
-      propertyPath: m_Simulated
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 483306621690166336, guid: d15012dc3e570428e80c13432a3c389a, type: 3}
-      propertyPath: m_CollisionDetection
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4210717693390680297, guid: d15012dc3e570428e80c13432a3c389a, type: 3}
-      propertyPath: m_Mesh
-      value: 
+    - target: {fileID: 48517265222451026, guid: d15012dc3e570428e80c13432a3c389a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6220360698024048490, guid: d15012dc3e570428e80c13432a3c389a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -569,13 +561,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6592016211471751859, guid: d15012dc3e570428e80c13432a3c389a, type: 3}
-      propertyPath: _jumpForce
-      value: 10
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects:
-    - {fileID: 2679620133418430285, guid: d15012dc3e570428e80c13432a3c389a, type: 3}
+    m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d15012dc3e570428e80c13432a3c389a, type: 3}

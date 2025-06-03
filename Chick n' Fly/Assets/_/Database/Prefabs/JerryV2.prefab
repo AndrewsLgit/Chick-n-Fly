@@ -175,6 +175,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_isVerbose: 0
   m_currentState: 0
+  m_currentPlatform: {fileID: 0}
   _directionArrowPivot: {fileID: 3404891992635879048}
   _rigidbody: {fileID: 5618854627876636666}
   _groundChecker: {fileID: 277795668157503195}
@@ -198,7 +199,7 @@ MonoBehaviour:
   _groundDistance: 0.1
   _groundLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
 --- !u!114 &6977200183439832827
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -211,7 +212,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b96c0e8c091d0492089b4d30195aedbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_isVerbose: 0
+  m_isVerbose: 1
   _playerIsJumping: {fileID: 11400000, guid: 35b3339715c8d45bfa167a21917c2e90, type: 2}
 --- !u!114 &1746348703836314767
 MonoBehaviour:

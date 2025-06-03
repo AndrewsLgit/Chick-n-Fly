@@ -377,6 +377,30 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 1
+--- !u!1 &675752107 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3286422840580971365, guid: 2aec054e76d528045a93f29752a4df79, type: 3}
+  m_PrefabInstance: {fileID: 1561342363}
+  m_PrefabAsset: {fileID: 0}
+--- !u!61 &675752112 stripped
+BoxCollider2D:
+  m_CorrespondingSourceObject: {fileID: 3122427080714649591, guid: 2aec054e76d528045a93f29752a4df79, type: 3}
+  m_PrefabInstance: {fileID: 1561342363}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &675752113
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 675752107}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edd07c8dff8f4ac8a7f67c551e2666b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_isVerbose: 0
+  _collider: {fileID: 675752112}
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -517,6 +541,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: P_Sticky_Big
       objectReference: {fileID: 0}
+    - target: {fileID: 4444583118567937401, guid: 2aec054e76d528045a93f29752a4df79, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5270711393149650937, guid: 2aec054e76d528045a93f29752a4df79, type: 3}
       propertyPath: m_LocalPosition.x
       value: 4.4335003
@@ -558,13 +586,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6836649956997518435, guid: 2aec054e76d528045a93f29752a4df79, type: 3}
-      propertyPath: m_IsTrigger
+      propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6836649956997518435, guid: 2aec054e76d528045a93f29752a4df79, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3286422840580971365, guid: 2aec054e76d528045a93f29752a4df79, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 675752113}
   m_SourcePrefab: {fileID: 100100000, guid: 2aec054e76d528045a93f29752a4df79, type: 3}
 --- !u!1001 &673596705748960170
 PrefabInstance:
@@ -577,14 +612,6 @@ PrefabInstance:
     - target: {fileID: 48517265222451026, guid: d15012dc3e570428e80c13432a3c389a, type: 3}
       propertyPath: m_Name
       value: Jerry
-      objectReference: {fileID: 0}
-    - target: {fileID: 48517265222451026, guid: d15012dc3e570428e80c13432a3c389a, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4994996592437916666, guid: d15012dc3e570428e80c13432a3c389a, type: 3}
-      propertyPath: _unityEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnJump
       objectReference: {fileID: 0}
     - target: {fileID: 6220360698024048490, guid: d15012dc3e570428e80c13432a3c389a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -626,14 +653,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8555051512205636524, guid: d15012dc3e570428e80c13432a3c389a, type: 3}
-      propertyPath: m_isVerbose
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8555051512205636524, guid: d15012dc3e570428e80c13432a3c389a, type: 3}
-      propertyPath: _playerIsJumping
-      value: 
-      objectReference: {fileID: 11400000, guid: 35b3339715c8d45bfa167a21917c2e90, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -654,14 +673,6 @@ PrefabInstance:
     - target: {fileID: 6319745553877886278, guid: bddbda3426cfb43149bd110cfa0ecf3d, type: 3}
       propertyPath: m_Name
       value: JerryV2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6319745553877886278, guid: bddbda3426cfb43149bd110cfa0ecf3d, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6977200183439832827, guid: bddbda3426cfb43149bd110cfa0ecf3d, type: 3}
-      propertyPath: m_isVerbose
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8286646693458814016, guid: bddbda3426cfb43149bd110cfa0ecf3d, type: 3}
       propertyPath: m_LocalPosition.x

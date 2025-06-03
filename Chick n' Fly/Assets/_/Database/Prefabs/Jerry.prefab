@@ -16,13 +16,14 @@ GameObject:
   - component: {fileID: 3255610470378811693}
   - component: {fileID: 483306621690166336}
   - component: {fileID: -5661825070788552301}
+  - component: {fileID: 8103004811449379424}
   m_Layer: 0
   m_Name: Jerry
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6220360698024048490
 Transform:
   m_ObjectHideFlags: 0
@@ -52,6 +53,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_isVerbose: 0
+  m_currentState: 0
+  m_currentPlatform: {fileID: 0}
   _directionArrowPivot: {fileID: 1161084674486090411}
   _rigidbody: {fileID: 483306621690166336}
   _groundChecker: {fileID: 83495312109754360}
@@ -71,8 +74,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b96c0e8c091d0492089b4d30195aedbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_isVerbose: 0
-  _playerIsJumping: {fileID: 0}
+  m_isVerbose: 1
+  _playerIsJumping: {fileID: 11400000, guid: 35b3339715c8d45bfa167a21917c2e90, type: 2}
 --- !u!114 &4994996592437916666
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -92,7 +95,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 6592016211471751859}
         m_TargetAssemblyTypeName: Player.Runtime.PlayerCharacter, Player.Runtime
-        m_MethodName: SetJumping
+        m_MethodName: OnJump
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -114,11 +117,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82386f5b3c144d34af0fcc666b310e44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_isVerbose: 0
+  m_isVerbose: 1
   _groundDistance: 0.1
   _groundLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
 --- !u!212 &3255610470378811693
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -208,7 +211,7 @@ PolygonCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 48517265222451026}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}
@@ -378,6 +381,43 @@ PolygonCollider2D:
       - {x: 0.295, y: 0.099999994}
       - {x: 0.295, y: 0.14}
   m_UseDelaunayMesh: 0
+--- !u!70 &8103004811449379424
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 48517265222451026}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 2.445}
+  m_Size: {x: 4.09, y: 4.89}
+  m_Direction: 0
 --- !u!1 &1161084674486090411
 GameObject:
   m_ObjectHideFlags: 0

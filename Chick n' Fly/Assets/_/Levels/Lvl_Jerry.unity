@@ -2345,6 +2345,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Jerry
       objectReference: {fileID: 0}
+    - target: {fileID: 48517265222451026, guid: d15012dc3e570428e80c13432a3c389a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6220360698024048490, guid: d15012dc3e570428e80c13432a3c389a, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.29000002

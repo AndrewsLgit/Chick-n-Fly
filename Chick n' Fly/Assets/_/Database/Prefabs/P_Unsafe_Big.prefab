@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2936442678437667233}
   m_Layer: 0
   m_Name: P_Unsafe_Big
-  m_TagString: Untagged
+  m_TagString: Unsafe
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

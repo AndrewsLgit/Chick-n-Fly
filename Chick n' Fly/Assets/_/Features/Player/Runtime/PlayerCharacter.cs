@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using Codice.Client.BaseCommands.FastExport;
 using PrimeTween;
 using SharedData.Runtime;
+using Unity.VisualScripting.YamlDotNet.Core.Tokens;
+using UnityEditor.UIElements;
 using UnityEngine;
 
 namespace Player.Runtime
@@ -30,13 +32,19 @@ namespace Player.Runtime
         // todo: make player jump towards arrow direction -> DONE
         // todo: make arrow stop moving when _isJumping -> DONE
         // make arrow disappear after Jumping until Grounded
-        // add collider to stick to surfaces
+        // add collider to stick to surfaces -> DONE
         
-        // TODO ????? IMPLEMENT STATE MACHINE FOR ANIMATION TRANSITION AND JUMPING,GROUNDED STATES
+        // TODO ????? IMPLEMENT STATE MACHINE FOR ANIMATION TRANSITION AND JUMPING,GROUNDED STATES -> DONE ?
         [Header("References")]
         [SerializeField] private GameObject _directionArrowPivot;
         [SerializeField] private Rigidbody2D _rigidbody;
-        [SerializeField] private GroundChecker _groundChecker; // todo: change player 2D collider to Capsule Collider 2D
+        [SerializeField] private GroundChecker _groundChecker;
+        
+        [Header("Platform Tags")]
+        [SerializeField] private string _stickyPlatformTag = "Sticky";
+        [SerializeField] private string _bubblePlatformTag = "Bubble";
+        [SerializeField] private string _unsafePlatformTag = "Unsafe";
+        [SerializeField] private string _nestPlatformTag = "Nest";
 
  
         //[Header("Movement Values")]
@@ -53,6 +61,11 @@ namespace Player.Runtime
 
         [Header("Jump Values")] 
         [SerializeField] private float _jumpForce = 10f;
+
+        [Header("Event Channels")] 
+        [SerializeField] private EventChannel _onPlayerDeath;
+        [SerializeField] private EventChannel _onPlayerVictory;
+        
         private bool _isGrounded = true;
         
         private Tween _tween;
@@ -87,8 +100,7 @@ namespace Player.Runtime
 
             if (m_currentPlatform != null)
             {
-                transform.position = m_currentPlatform.transform.position;
-                transform.rotation = m_currentPlatform.transform.rotation;
+                HandleCurrentPlatform(m_currentPlatform);
             }
             // manage state transitions here
             // switch (m_currentState)
@@ -121,7 +133,6 @@ namespace Player.Runtime
                             m_currentState = STATE.POWER;
                             return;
                         }
-
                         HandleAiming();
                     }
                     //if (_jumpTimer.IsRunning && !_jumpStateStarted) m_currentState =  STATE.POWER;
@@ -281,7 +292,6 @@ namespace Player.Runtime
             public void OnJump(bool isJumping)
             {
                 // if player released the jump key and the timer isn't running yet (isn't in a jump state)
-                // todo: add ground checker
                 _jumpStateStarted = isJumping;
                 if(_jumpStateStarted && !_jumpTimer.IsRunning) _jumpTimer.Start();
                 _canJump = isJumping;
@@ -291,7 +301,6 @@ namespace Player.Runtime
             private void HandleJump()
             {
                 // var jumpForce = _jumpForce;
-                //todo: add ground checker
                 
                 // if (_jumpTimer.IsRunning && !_groundChecker.IsGrounded && !_jumpStateStarted)
                 // {
@@ -299,7 +308,6 @@ namespace Player.Runtime
                 if (!_canJump)
                 {
                     _rigidbody.linearVelocity = _directionArrowPivot.transform.up * (_jumpForce); //todo add back Time.deltaTime
-
                 }
                 if (_jumpTimer.IsRunning && m_currentPlatform != null)
                 {
@@ -348,6 +356,28 @@ namespace Player.Runtime
         {
             target.rotation = Quaternion.LookRotation(direction);
         }
+
+        private void HandleCurrentPlatform(Platform platform)
+        {
+            switch (platform.tag)
+            {
+                case "Sticky": case "Bubble":
+                    transform.position = m_currentPlatform.transform.position;
+                    transform.rotation = m_currentPlatform.transform.rotation;
+                    break;
+                case "Unsafe":
+                    _onPlayerDeath?.Invoke(Empty);
+                    break;
+                case "Nest":
+                    _onPlayerVictory?.Invoke(Empty);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        public Empty Empty { get; }
+
         #endregion
     }
 }

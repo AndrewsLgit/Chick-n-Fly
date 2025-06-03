@@ -22,6 +22,7 @@ namespace Player.Runtime
 
         public STATE m_currentState =  STATE.AIMING;
         public Platform m_currentPlatform; //todo: add platform check to JUMP STATE
+        public GameObject DebugMarker;
 
         #endregion
         #region Private Variables
@@ -59,6 +60,7 @@ namespace Player.Runtime
         private List<Timer>  _timers = new List<Timer>();
         private bool _jumpStateStarted = false;
         private bool _movedRight = false;
+        private bool _canJump = false;
 
         #endregion
         
@@ -282,6 +284,7 @@ namespace Player.Runtime
                 // todo: add ground checker
                 _jumpStateStarted = isJumping;
                 if(_jumpStateStarted && !_jumpTimer.IsRunning) _jumpTimer.Start();
+                _canJump = isJumping;
                 // if player jump timer is running and the player touched the ground -> stop timer
                 //if(_jumpTimer.IsRunning /* &&  _groundChecker.IsGrounded*/) _jumpTimer.Stop();
             }
@@ -292,11 +295,17 @@ namespace Player.Runtime
                 
                 // if (_jumpTimer.IsRunning && !_groundChecker.IsGrounded && !_jumpStateStarted)
                 // {
-                _rigidbody.linearVelocity = _directionArrowPivot.transform.up * (_jumpForce); //todo add back Time.deltaTime
+                DebugMarker?.SetActive(_canJump);
+                if (!_canJump)
+                {
+                    _rigidbody.linearVelocity = _directionArrowPivot.transform.up * (_jumpForce); //todo add back Time.deltaTime
+
+                }
                 if (_jumpTimer.IsRunning && m_currentPlatform != null)
                 {
                     _jumpTimer.Stop();
                     _directionArrowPivot.SetActive(true);
+                    _canJump = true;
                 }
                 // }
                 
@@ -321,8 +330,8 @@ namespace Player.Runtime
         {
             _jumpTimer = new StopwatchTimer();
             // Disable arrow (direction indicator) when the player jumps
-            _jumpTimer.OnTimerStart += () => _directionArrowPivot.SetActive(true);
-            _jumpTimer.OnTimerStop += () => _directionArrowPivot.SetActive(false);
+            _jumpTimer.OnTimerStart += () => _directionArrowPivot.SetActive(false);
+            _jumpTimer.OnTimerStop += () => _directionArrowPivot.SetActive(true);
             
             _timers.Add(_jumpTimer);
         }

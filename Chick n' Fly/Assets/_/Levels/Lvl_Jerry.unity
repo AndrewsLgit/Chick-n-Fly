@@ -2500,6 +2500,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 277795668157503195, guid: bddbda3426cfb43149bd110cfa0ecf3d, type: 3}
+      propertyPath: m_isVerbose
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2953680168752238842, guid: bddbda3426cfb43149bd110cfa0ecf3d, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -2507,6 +2511,10 @@ PrefabInstance:
     - target: {fileID: 6319745553877886278, guid: bddbda3426cfb43149bd110cfa0ecf3d, type: 3}
       propertyPath: m_Name
       value: JerryV2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6977200183439832827, guid: bddbda3426cfb43149bd110cfa0ecf3d, type: 3}
+      propertyPath: m_isVerbose
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8286646693458814016, guid: bddbda3426cfb43149bd110cfa0ecf3d, type: 3}
       propertyPath: m_LocalPosition.x

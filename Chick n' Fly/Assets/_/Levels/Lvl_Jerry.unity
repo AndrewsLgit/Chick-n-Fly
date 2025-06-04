@@ -2492,11 +2492,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1279965749}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &1411698479 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6220360698024048490, guid: d15012dc3e570428e80c13432a3c389a, type: 3}
-  m_PrefabInstance: {fileID: 1348008305}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1483986700
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3016,6 +3011,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1085009142}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &1752363115 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8286646693458814016, guid: bddbda3426cfb43149bd110cfa0ecf3d, type: 3}
+  m_PrefabInstance: {fileID: 1483986700}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1787189546
 GameObject:
   m_ObjectHideFlags: 0
@@ -4126,7 +4126,7 @@ MonoBehaviour:
   m_StreamingVersion: 20241001
   m_LegacyPriority: 0
   Target:
-    TrackingTarget: {fileID: 1411698479}
+    TrackingTarget: {fileID: 1752363115}
     LookAtTarget: {fileID: 0}
     CustomLookAtTarget: 0
   Lens:

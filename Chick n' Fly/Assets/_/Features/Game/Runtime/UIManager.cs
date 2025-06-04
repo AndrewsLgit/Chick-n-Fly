@@ -1,4 +1,6 @@
 using System;
+using SharedData.Runtime;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -13,6 +15,10 @@ namespace Game.Runtime
         [SerializeField] private GameObject _pauseMenu;
         [SerializeField] private GameObject _gameOverMenu;
         [SerializeField] private GameObject _victoryMenu;
+        [SerializeField] private TextMeshProUGUI _timerTextNumberTMP;
+        [SerializeField] private string _timerTextString = "Remaining time: ";
+        [SerializeField] private float _timerStartValue;
+        private CountdownTimer _gameTimer;
 
         #endregion
 
@@ -26,10 +32,23 @@ namespace Game.Runtime
             // some UI setup
         }
 
+        private void Start()
+        {
+            SetupTimers();
+            _gameTimer.Start();
+        }
+
         private void Update()
         {
             // don't execute logic if the game is paused
-            if (_isPaused) return;
+            if (_isPaused)
+            {
+                _gameTimer.Pause();
+                return;
+            }
+            _gameTimer.Resume();
+            _gameTimer.Tick(Time.deltaTime);
+           _timerTextNumberTMP.text = $"{_timerTextString}{Mathf.FloorToInt(_gameTimer.GetTime()).ToString()}"; 
         }
 
         #endregion
@@ -66,7 +85,7 @@ namespace Game.Runtime
         {
             // load first scene in SceneManager
             // todo: declare scene inside Unity Build Settings
-            SceneManager.LoadSceneAsync(1);
+            SceneManager.LoadSceneAsync(0);
         }
 
         public void GameOver()
@@ -98,6 +117,24 @@ namespace Game.Runtime
         {
             _isPaused = !_isPaused;
         }
+        
+        private void SetupTimers()
+        {
+            _gameTimer = new CountdownTimer(_timerStartValue);
+            // Disable arrow (direction indicator) when the player jumps
+            _gameTimer.OnTimerStart += () => _timerTextNumberTMP.text = _timerTextString;
+            _gameTimer.OnTimerStop += GameOver;
+
+            //_timers.Add(_jumpTimer);
+        }
+
+        // private void HandleTimers()
+        // {
+        //     foreach (var timer in _timers)
+        //     {
+        //         timer.Tick(Time.deltaTime);
+        //     }
+        // }
 
         #endregion
     }

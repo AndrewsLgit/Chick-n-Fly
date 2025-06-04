@@ -36,6 +36,8 @@ namespace SharedData.Runtime
         public void Pause() => IsRunning = false;
         
         public abstract void Tick(float deltaTime);
+        
+        public float GetTime() => Time;
     }
     
     public class CountdownTimer : Timer {

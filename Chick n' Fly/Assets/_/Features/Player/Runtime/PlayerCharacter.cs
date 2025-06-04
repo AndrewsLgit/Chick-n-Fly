@@ -39,6 +39,8 @@ namespace Player.Runtime
         [SerializeField] private GameObject _directionArrowPivot;
         [SerializeField] private Rigidbody2D _rigidbody;
         [SerializeField] private GroundChecker _groundChecker;
+        [SerializeField] private Collider2D _collider;
+        [SerializeField] private float _colliderReactivationTime = 0.2f;
         
         [Header("Platform Tags")]
         [SerializeField] private string _stickyPlatformTag = "Sticky";
@@ -71,9 +73,9 @@ namespace Player.Runtime
         private Tween _tween;
         private StopwatchTimer _jumpTimer;
         private List<Timer>  _timers = new List<Timer>();
-        private bool _jumpStateStarted = false;
+        private bool _jumpStateOnStart = false;
         private bool _movedRight = false;
-        private bool _canJump = false;
+        private bool _canJumpAgain = false;
 
         #endregion
         
@@ -126,11 +128,12 @@ namespace Player.Runtime
             switch (m_currentState)
             {
                 case STATE.AIMING:
-                    if (!_jumpStateStarted)
+                    if (!_jumpStateOnStart)
                     {
                         if (_jumpTimer.IsRunning)
                         {
-                            m_currentState = STATE.POWER;
+                            m_currentState = STATE.JUMP;
+                            // m_currentPlatform = null;
                             return;
                         }
                         HandleAiming();
@@ -147,13 +150,17 @@ namespace Player.Runtime
                     // and a switch statement inside of an input method to change states between power and jump
                     //_tween.Stop();
                     //Tween.StopAll(_directionArrowPivot);
-                    Tween.SetPausedAll(true, _directionArrowPivot);
-                    m_currentPlatform = null;
-                    if (_jumpTimer.IsRunning) m_currentState = STATE.JUMP;
+                    //Tween.SetPausedAll(true, _directionArrowPivot);
+                    if (_jumpTimer.IsRunning)
+                    {
+                        // m_currentPlatform = null;
+                        m_currentState = STATE.JUMP;
+                    }
                     break;
                 case STATE.JUMP:
+                    // if (_jumpTimer.IsRunning) m_currentPlatform = null;
                     HandleJump();
-                    if (!_jumpTimer.IsRunning && m_currentPlatform != null) m_currentState = STATE.AIMING;
+                    if (!_jumpTimer.IsRunning || m_currentPlatform != null) m_currentState = STATE.AIMING;
                     break;
                 case STATE.IDLE:
                     break;
@@ -288,13 +295,29 @@ namespace Player.Runtime
                 _rigidbody.linearVelocity = _directionArrowPivot.transform.up * _jumpForce;
                 //_rigidbody.AddForce(new Vector3(0, _jumpForce, 0), ForceMode2D.Impulse);
             }
-
+            private IEnumerator ReactivateCollider()
+            {
+                yield return new WaitForSeconds(_colliderReactivationTime);
+                _collider.enabled = true;
+            }
             public void OnJump(bool isJumping)
             {
                 // if player released the jump key and the timer isn't running yet (isn't in a jump state)
-                _jumpStateStarted = isJumping;
-                if(_jumpStateStarted && !_jumpTimer.IsRunning) _jumpTimer.Start();
-                _canJump = isJumping;
+                _jumpStateOnStart = isJumping;
+                if (_jumpStateOnStart && !_timers[0].IsRunning)
+                {
+                    Info($"Started Jump");
+                    _jumpTimer.Start();
+                    if (m_currentPlatform != null)
+                    {
+                        _collider.enabled = false;
+                        StartCoroutine(ReactivateCollider());
+                        m_currentPlatform =  null;
+                    }
+                    //m_currentPlatform = null;
+                    _rigidbody.linearVelocity = _directionArrowPivot.transform.up * _jumpForce;
+                }
+                _canJumpAgain = false;
                 // if player jump timer is running and the player touched the ground -> stop timer
                 //if(_jumpTimer.IsRunning /* &&  _groundChecker.IsGrounded*/) _jumpTimer.Stop();
             }
@@ -304,16 +327,19 @@ namespace Player.Runtime
                 
                 // if (_jumpTimer.IsRunning && !_groundChecker.IsGrounded && !_jumpStateStarted)
                 // {
-                DebugMarker?.SetActive(_canJump);
-                if (!_canJump)
+                if (!_jumpTimer.IsRunning) return;
+                DebugMarker?.SetActive(_jumpTimer.IsRunning);
+                if (!_canJumpAgain) //&& _jumpTimer.IsRunning)
                 {
-                    _rigidbody.linearVelocity = _directionArrowPivot.transform.up * (_jumpForce); //todo add back Time.deltaTime
+                    //_rigidbody.linearVelocity = _directionArrowPivot.transform.up * (_jumpForce); 
+                    // _rigidbody.linearVelocityX = 0f;
                 }
-                if (_jumpTimer.IsRunning && m_currentPlatform != null)
+                if (m_currentPlatform != null) // && m_currentPlatform != null)
                 {
-                    _jumpTimer.Stop();
+                    Info("Stopped Jump");
+                    _timers[0].Stop();
                     _directionArrowPivot.SetActive(true);
-                    _canJump = true;
+                    _canJumpAgain = true;
                 }
                 // }
                 
@@ -338,7 +364,11 @@ namespace Player.Runtime
         {
             _jumpTimer = new StopwatchTimer();
             // Disable arrow (direction indicator) when the player jumps
-            _jumpTimer.OnTimerStart += () => _directionArrowPivot.SetActive(false);
+            _jumpTimer.OnTimerStart += () =>
+            {
+                // m_currentPlatform = null;
+                _directionArrowPivot.SetActive(false);
+            };
             _jumpTimer.OnTimerStop += () => _directionArrowPivot.SetActive(true);
             
             _timers.Add(_jumpTimer);
@@ -362,6 +392,7 @@ namespace Player.Runtime
             switch (platform.tag)
             {
                 case "Sticky": case "Bubble":
+                    if (m_currentState == STATE.JUMP) return;
                     transform.position = m_currentPlatform.transform.position;
                     transform.rotation = m_currentPlatform.transform.rotation;
                     break;

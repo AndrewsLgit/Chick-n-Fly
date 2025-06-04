@@ -97,6 +97,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7511818759498626469}
   - component: {fileID: 7556352039534277417}
+  - component: {fileID: 49047004660481789}
   m_Layer: 0
   m_Name: NEST
   m_TagString: Nest
@@ -157,3 +158,17 @@ CapsuleCollider2D:
   m_Offset: {x: 0.08423427, y: 0.1871656}
   m_Size: {x: 6.2615314, y: 3.6456814}
   m_Direction: 1
+--- !u!114 &49047004660481789
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3494119204593929856}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edd07c8dff8f4ac8a7f67c551e2666b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_isVerbose: 0
+  _collider: {fileID: 7556352039534277417}

@@ -267,6 +267,8 @@ MonoBehaviour:
   _directionArrowPivot: {fileID: 3404891992635879048}
   _rigidbody: {fileID: 5618854627876636666}
   _groundChecker: {fileID: 277795668157503195}
+  _collider: {fileID: 5571030736646420429}
+  _colliderReactivationTime: 0.2
   _stickyPlatformTag: Sticky
   _bubblePlatformTag: Bubble
   _unsafePlatformTag: Unsafe

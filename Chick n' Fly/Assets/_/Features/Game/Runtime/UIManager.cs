@@ -1,4 +1,3 @@
-using System;
 using SharedData.Runtime;
 using TMPro;
 using UnityEngine;

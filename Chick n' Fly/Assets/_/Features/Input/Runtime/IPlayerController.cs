@@ -1,5 +1,3 @@
-using SharedData.Runtime;
-using UnityEngine;
 
 namespace Input.Runtime
 {

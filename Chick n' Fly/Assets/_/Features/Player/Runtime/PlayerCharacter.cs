@@ -24,7 +24,7 @@ namespace Player.Runtime
 
         public STATE m_currentState =  STATE.AIMING;
         public Platform m_currentPlatform; //todo: add platform check to JUMP STATE
-        public GameObject DebugMarker;
+        // public GameObject DebugMarker;
 
         #endregion
         #region Private Variables
@@ -328,7 +328,7 @@ namespace Player.Runtime
                 // if (_jumpTimer.IsRunning && !_groundChecker.IsGrounded && !_jumpStateStarted)
                 // {
                 if (!_jumpTimer.IsRunning) return;
-                DebugMarker?.SetActive(_jumpTimer.IsRunning);
+                // DebugMarker?.SetActive(_jumpTimer.IsRunning);
                 if (!_canJumpAgain) //&& _jumpTimer.IsRunning)
                 {
                     //_rigidbody.linearVelocity = _directionArrowPivot.transform.up * (_jumpForce); 

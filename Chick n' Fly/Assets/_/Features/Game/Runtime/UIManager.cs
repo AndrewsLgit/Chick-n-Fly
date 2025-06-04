@@ -8,6 +8,11 @@ namespace Game.Runtime
 {
     public class UIManager : BigBrother
     {
+        #region Public Variables
+
+        public EventChannel m_OnPlayerDeath;
+
+        #endregion
         #region Private Variables
 
         private bool _isPaused;
@@ -91,6 +96,7 @@ namespace Game.Runtime
         public void GameOver()
         {
             // stop game time
+            // m_OnPlayerDeath?.Invoke(new Empty());
             Time.timeScale = 0;
             _gameOverMenu.SetActive(true);
         }

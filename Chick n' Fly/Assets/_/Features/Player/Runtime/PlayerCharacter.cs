@@ -397,14 +397,26 @@ namespace Player.Runtime
                     transform.rotation = m_currentPlatform.transform.rotation;
                     break;
                 case "Unsafe":
-                    _onPlayerDeath?.Invoke(Empty);
+                    OnDeath();
                     break;
                 case "Nest":
-                    _onPlayerVictory?.Invoke(Empty);
+                    OnVictory();
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+        }
+
+        public void OnDeath()
+        {
+            _onPlayerDeath?.Invoke(Empty);
+            //gameObject.SetActive(false);
+        }
+
+        public void OnVictory()
+        {
+            _onPlayerVictory?.Invoke(Empty); 
+            //gameObject.SetActive(false);
         }
 
         public Empty Empty { get; }

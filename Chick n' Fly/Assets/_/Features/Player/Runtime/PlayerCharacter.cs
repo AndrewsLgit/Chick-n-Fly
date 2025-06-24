@@ -24,7 +24,9 @@ namespace Player.Runtime
         // public GameObject DebugMarker;
 
         #endregion
+        
         #region Private Variables
+        
         // todo: remove rigidbody and use linearVelocity -> DONE
         // todo: make player jump towards arrow direction -> DONE
         // todo: make arrow stop moving when _isJumping -> DONE
